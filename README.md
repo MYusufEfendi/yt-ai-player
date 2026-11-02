@@ -1,5 +1,9 @@
 # YT AI Player
 
+<p align="center">
+  <img src="logo.svg" alt="YT AI Player Logo" width="280" />
+</p>
+
 Player ala Spotify, HTML saja: AI carikan lagu mirip sesuai genre/mood/contoh lagu, play via YouTube embed, playlist tersimpan sebagai cache lokal.
 
 Mekanisme API key mirip `ai-prd-generator`: pilih provider + paste key, tersimpan hanya di `localStorage`, dikirim langsung ke provider — tanpa server perantara.

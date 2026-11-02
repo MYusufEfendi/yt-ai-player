@@ -145,23 +145,36 @@ input:focus, select:focus { outline: none; }
 }
 
 .logo-mark {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--r-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--accent), #2563EB);
+  background: linear-gradient(135deg, #FF2E55 0%, #9333EA 50%, #4F46E5 100%);
+  box-shadow: 0 4px 18px rgba(255, 46, 85, 0.35);
   color: #fff;
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
 }
 
-.logo-mark svg { width: 18px; height: 18px; }
+.logo:hover .logo-mark {
+  transform: scale(1.05);
+  box-shadow: 0 6px 22px rgba(255, 46, 85, 0.5);
+}
+
+.logo-mark svg { width: 20px; height: 20px; }
 
 .logo-text {
   font-weight: 800;
   font-size: 17px;
   letter-spacing: -0.02em;
   line-height: 1.1;
+}
+
+.logo-ai-accent {
+  background: linear-gradient(135deg, #FF2E55, #A855F7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .logo-text small {
