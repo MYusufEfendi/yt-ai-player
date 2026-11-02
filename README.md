@@ -26,6 +26,7 @@ python3 -m http.server 8081
 7. Navigasi: sidebar kiri ada **Hasil Pencarian / Riwayat / Playlist**. Buka Favorit lalu klik **← Kembali ke hasil** untuk balik — hasil search tidak hilang.
 8. Load more: **↓ Tampilkan lebih banyak** (paginasi lokal) dan **✨ Minta lagu tambahan ke AI** (exclude lagu yang sudah ada).
 9. Player: progress bar bisa diklik (seek), Prev ulangi lagu jika >3 detik, volume slider, tombol 🎬 buka video + antrean, ♥ di player.
+   - **Mode Tampilan Player**: bisa diatur **Split di Sebelah Kanan (Side Panel)** ala Spotify Desktop atau **Drawer di Bawah (Swipe Bawah)** melalui tombol switcher di player bar / header panel / menu Setup.
 
 ## File
 

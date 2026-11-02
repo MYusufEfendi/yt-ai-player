@@ -913,21 +913,78 @@
 
   $("btnLike").onclick = function() { var t = state.queue[state.qi]; if (t) { toggleLike(t); paintNowPlaying(t); } };
 
+  /* ---------- PLAYER MODE (SPLIT KANAN vs DRAWER BAWAH) ---------- */
+  var PM_LS = "ytmusic_player_mode"; // "side" or "bottom"
+
+  function getPlayerMode() {
+    var saved = localStorage.getItem(PM_LS);
+    if (saved === "side" || saved === "bottom") return saved;
+    return (window.innerWidth > 900) ? "side" : "bottom";
+  }
+
+  function applyPlayerMode(mode) {
+    var isSide = mode === "side";
+    $("player").classList.toggle("side-mode", isSide);
+    $("player").classList.toggle("bottom-mode", !isSide);
+
+    var sideLabel = $("sideModeLabel");
+    if (sideLabel) sideLabel.textContent = isSide ? "Split Kanan" : "Drawer Bawah";
+
+    var sideIcons = document.querySelectorAll(".mode-icon-side");
+    var bottomIcons = document.querySelectorAll(".mode-icon-bottom");
+    for (var i = 0; i < sideIcons.length; i++) sideIcons[i].classList.toggle("hidden", !isSide);
+    for (var j = 0; j < bottomIcons.length; j++) bottomIcons[j].classList.toggle("hidden", isSide);
+
+    if ($("btnPlayerMode")) {
+      $("btnPlayerMode").title = isSide ? "Mode: Split Kanan (klik untuk ganti ke Drawer Bawah)" : "Mode: Drawer Bawah (klik untuk ganti ke Split Kanan)";
+    }
+    if ($("btnToggleSideMode")) {
+      $("btnToggleSideMode").title = isSide ? "Ganti ke mode Drawer Bawah" : "Ganti ke mode Split Kanan";
+    }
+
+    if ($("playerLayoutSelect")) $("playerLayoutSelect").value = mode;
+
+    var isExp = $("player").classList.contains("expanded");
+    document.body.classList.toggle("has-side-player", isExp && isSide);
+
+    localStorage.setItem(PM_LS, mode);
+  }
+
+  function togglePlayerMode() {
+    var cur = getPlayerMode();
+    var next = cur === "side" ? "bottom" : "side";
+    applyPlayerMode(next);
+    flash("ok", "Tampilan player: " + (next === "side" ? "Split di Sebelah Kanan" : "Drawer di Bawah"));
+  }
+
   function setExpanded(v) {
     $("pDrawer").classList.toggle("open", !!v);
     $("player").classList.toggle("expanded", !!v);
+    var isSide = getPlayerMode() === "side";
+    document.body.classList.toggle("has-side-player", !!v && isSide);
   }
 
   $("btnLyrics").onclick = function() { switchDrawerTab("lyrics"); setExpanded(true); };
   $("btnVideo").onclick = function() { setExpanded(!$("player").classList.contains("expanded")); };
 
-  /* drag handle */
+  if ($("btnCloseDrawer")) $("btnCloseDrawer").onclick = function() { setExpanded(false); };
+  if ($("btnToggleSideMode")) $("btnToggleSideMode").onclick = togglePlayerMode;
+  if ($("btnPlayerMode")) $("btnPlayerMode").onclick = togglePlayerMode;
+  if ($("playerLayoutSelect")) {
+    $("playerLayoutSelect").onchange = function() {
+      applyPlayerMode(this.value);
+      flash("ok", "Tampilan diubah ke: " + (this.value === "side" ? "Split di Sebelah Kanan" : "Drawer Bawah"));
+    };
+  }
+
+  /* drag handle (khusus drawer bawah) */
   (function() {
     var handle = $("dragHandle"); if (!handle) return;
     var startY = null, dragging = false, moved = false, baseH = 0;
     function isExpanded() { return $("player").classList.contains("expanded"); }
     function maxDrawer() { return Math.round(window.innerHeight * 0.95); }
     handle.addEventListener("pointerdown", function(e) {
+      if (getPlayerMode() === "side") return;
       dragging = true; moved = false; startY = e.clientY;
       baseH = isExpanded() ? maxDrawer() : 0;
       try { handle.setPointerCapture(e.pointerId); } catch (err) {}
@@ -1175,6 +1232,7 @@
 
   /* ---------- INIT ---------- */
   initTheme();
+  applyPlayerMode(getPlayerMode());
   loadSettings();
   loadStore();
   renderAll(false);
