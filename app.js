@@ -926,9 +926,17 @@
     var isSide = mode === "side";
     $("player").classList.toggle("side-mode", isSide);
     $("player").classList.toggle("bottom-mode", !isSide);
+    document.body.classList.toggle("player-mode-side", isSide);
+    document.body.classList.toggle("player-mode-bottom", !isSide);
+
+    var pdr = $("pDrawer");
+    if (pdr) {
+      pdr.classList.toggle("side-mode", isSide);
+      pdr.classList.toggle("bottom-mode", !isSide);
+    }
 
     var sideLabel = $("sideModeLabel");
-    if (sideLabel) sideLabel.textContent = isSide ? "Split Kanan" : "Drawer Bawah";
+    if (sideLabel) sideLabel.textContent = isSide ? "Mode: Split Kanan" : "Mode: Drawer Bawah";
 
     var sideIcons = document.querySelectorAll(".mode-icon-side");
     var bottomIcons = document.querySelectorAll(".mode-icon-bottom");
@@ -936,7 +944,7 @@
     for (var j = 0; j < bottomIcons.length; j++) bottomIcons[j].classList.toggle("hidden", isSide);
 
     if ($("btnPlayerMode")) {
-      $("btnPlayerMode").title = isSide ? "Mode: Split Kanan (klik untuk ganti ke Drawer Bawah)" : "Mode: Drawer Bawah (klik untuk ganti ke Split Kanan)";
+      $("btnPlayerMode").title = isSide ? "Tampilan: Split Kanan (klik untuk ganti ke Drawer Bawah)" : "Tampilan: Drawer Bawah (klik untuk ganti ke Split Kanan)";
     }
     if ($("btnToggleSideMode")) {
       $("btnToggleSideMode").title = isSide ? "Ganti ke mode Drawer Bawah" : "Ganti ke mode Split Kanan";
@@ -944,7 +952,7 @@
 
     if ($("playerLayoutSelect")) $("playerLayoutSelect").value = mode;
 
-    var isExp = $("player").classList.contains("expanded");
+    var isExp = $("pDrawer") ? $("pDrawer").classList.contains("open") : $("player").classList.contains("expanded");
     document.body.classList.toggle("has-side-player", isExp && isSide);
 
     localStorage.setItem(PM_LS, mode);
@@ -954,18 +962,35 @@
     var cur = getPlayerMode();
     var next = cur === "side" ? "bottom" : "side";
     applyPlayerMode(next);
+    if (next === "side") setExpanded(true);
     flash("ok", "Tampilan player: " + (next === "side" ? "Split di Sebelah Kanan" : "Drawer di Bawah"));
   }
 
   function setExpanded(v) {
-    $("pDrawer").classList.toggle("open", !!v);
-    $("player").classList.toggle("expanded", !!v);
+    var isOpen = !!v;
+    var pdr = $("pDrawer");
+    if (pdr) pdr.classList.toggle("open", isOpen);
+    $("player").classList.toggle("expanded", isOpen);
     var isSide = getPlayerMode() === "side";
-    document.body.classList.toggle("has-side-player", !!v && isSide);
+    document.body.classList.toggle("has-side-player", isOpen && isSide);
   }
 
   $("btnLyrics").onclick = function() { switchDrawerTab("lyrics"); setExpanded(true); };
-  $("btnVideo").onclick = function() { setExpanded(!$("player").classList.contains("expanded")); };
+  $("btnVideo").onclick = function() {
+    var isOpen = $("pDrawer") ? $("pDrawer").classList.contains("open") : $("player").classList.contains("expanded");
+    setExpanded(!isOpen);
+  };
+
+  var pLeft = document.querySelector(".player-left");
+  if (pLeft) {
+    pLeft.style.cursor = "pointer";
+    pLeft.title = "Klik untuk membuka video & lirik";
+    pLeft.onclick = function(e) {
+      if (e.target.closest("#btnLike")) return;
+      var isOpen = $("pDrawer") ? $("pDrawer").classList.contains("open") : $("player").classList.contains("expanded");
+      setExpanded(!isOpen);
+    };
+  }
 
   if ($("btnCloseDrawer")) $("btnCloseDrawer").onclick = function() { setExpanded(false); };
   if ($("btnToggleSideMode")) $("btnToggleSideMode").onclick = togglePlayerMode;
@@ -973,6 +998,7 @@
   if ($("playerLayoutSelect")) {
     $("playerLayoutSelect").onchange = function() {
       applyPlayerMode(this.value);
+      if (this.value === "side") setExpanded(true);
       flash("ok", "Tampilan diubah ke: " + (this.value === "side" ? "Split di Sebelah Kanan" : "Drawer Bawah"));
     };
   }
@@ -1233,6 +1259,9 @@
   /* ---------- INIT ---------- */
   initTheme();
   applyPlayerMode(getPlayerMode());
+  if (getPlayerMode() === "side" && window.innerWidth >= 1100) {
+    setExpanded(true);
+  }
   loadSettings();
   loadStore();
   renderAll(false);
