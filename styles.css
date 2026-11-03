@@ -147,22 +147,22 @@ input:focus, select:focus { outline: none; }
 .logo-mark {
   width: 36px;
   height: 36px;
-  border-radius: var(--r-md);
+  border-radius: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #FF2E55 0%, #9333EA 50%, #4F46E5 100%);
-  box-shadow: 0 4px 18px rgba(255, 46, 85, 0.35);
-  color: #fff;
+  background: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12), 0 0 14px rgba(255, 46, 85, 0.25);
   transition: transform var(--t-fast), box-shadow var(--t-fast);
 }
 
 .logo:hover .logo-mark {
-  transform: scale(1.05);
-  box-shadow: 0 6px 22px rgba(255, 46, 85, 0.5);
+  transform: scale(1.06);
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.18), 0 0 20px rgba(255, 46, 85, 0.4);
 }
 
-.logo-mark svg { width: 20px; height: 20px; }
+.logo-mark svg { width: 22px; height: 22px; }
 
 .logo-text {
   font-weight: 800;
@@ -172,7 +172,7 @@ input:focus, select:focus { outline: none; }
 }
 
 .logo-ai-accent {
-  background: linear-gradient(135deg, #FF2E55, #A855F7);
+  background: linear-gradient(135deg, #FF1A53, #8B5CF6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
