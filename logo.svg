@@ -1,46 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" width="280" height="64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 56" width="260" height="56">
   <defs>
-    <linearGradient id="lightBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="100%" stop-color="#F8FAFC" />
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF0055" />
+      <stop offset="45%" stop-color="#E11D48" />
+      <stop offset="100%" stop-color="#7C3AED" />
     </linearGradient>
-    <linearGradient id="logoAccent" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF1A53" />
-      <stop offset="55%" stop-color="#8B5CF6" />
-      <stop offset="100%" stop-color="#3B82F6" />
-    </linearGradient>
-    <linearGradient id="textAiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF1A53" />
-      <stop offset="100%" stop-color="#8B5CF6" />
-    </linearGradient>
-    <filter id="softShadow" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0F172A" flood-opacity="0.1" />
+    <filter id="markShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3.5" flood-color="#FF0055" flood-opacity="0.3" />
     </filter>
+    <style>
+      .logo-title { font-family: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", "Inter", sans-serif; font-size: 20px; font-weight: 800; fill: #0F172A; letter-spacing: -0.4px; }
+      .logo-sub { font-family: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", "Inter", sans-serif; font-size: 10px; font-weight: 600; fill: #64748B; letter-spacing: 0.3px; }
+      @media (prefers-color-scheme: dark) {
+        .logo-title { fill: #FFFFFF; }
+        .logo-sub { fill: #94A3B8; }
+      }
+    </style>
   </defs>
 
-  <!-- Icon Mark (Squircle 52x52 on Light Ceramic) -->
-  <g transform="translate(6, 6)">
-    <rect x="0" y="0" width="52" height="52" rx="14" fill="url(#lightBg)" stroke="#E2E8F0" stroke-width="1.4" filter="url(#softShadow)"/>
-    
-    <!-- Soundwave bars -->
-    <rect x="11" y="24" width="2.6" height="8" rx="1.3" fill="url(#logoAccent)" opacity="0.8"/>
-    <rect x="15" y="19" width="2.6" height="18" rx="1.3" fill="url(#logoAccent)"/>
-
-    <!-- Play triangle -->
-    <path d="M20.5 17.5C20.5 16.4 21.7 15.7 22.6 16.2L35 23.5C35.8 24.0 35.8 25.4 35 25.9L22.6 33.2C21.7 33.7 20.5 33.0 20.5 31.9V17.5Z" fill="url(#logoAccent)" />
-
-    <!-- Sparkle star -->
-    <path d="M38 9C38 12 35.8 14.2 32.8 14.2C35.8 14.2 38 16.4 38 19.4C38 16.4 40.2 14.2 43.2 14.2C40.2 14.2 38 12 38 9Z" fill="#F59E0B" />
-    <circle cx="42" cy="23.5" r="1.3" fill="#8B5CF6" />
+  <!-- Left: Circular Brand Mark (44x44) -->
+  <g transform="translate(6, 6)" filter="url(#markShadow)">
+    <circle cx="22" cy="22" r="22" fill="url(#brandGrad)"/>
+    <circle cx="22" cy="22" r="17" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-opacity="0.35"/>
+    <!-- Play Triangle with AI Sparkle Cutout -->
+    <path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="
+      M 16 12
+      C 16 10.7 17.5 9.9 18.6 10.5
+      L 31.6 18.0
+      C 32.7 18.6 32.7 20.2 31.6 20.8
+      L 18.6 28.3
+      C 17.5 28.9 16 28.1 16 26.8
+      Z
+      M 22 15.2
+      C 22 17.3 20.5 19.1 18.5 19.1
+      C 20.5 19.1 22 20.9 22 23.0
+      C 22 20.9 23.5 19.1 25.5 19.1
+      C 23.5 19.1 22 17.3 22 15.2
+      Z
+    "/>
   </g>
 
-  <!-- Typography (Light Mode: Clean Dark Slate + Vibrant AI Accent) -->
-  <g transform="translate(70, 0)">
-    <text x="0" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800" fill="#0F172A" letter-spacing="-0.5">
-      YT <tspan fill="url(#textAiGrad)">AI</tspan> Player
+  <!-- Right: Typography -->
+  <g transform="translate(62, 0)">
+    <text x="0" y="29" class="logo-title">
+      YT <tspan fill="url(#brandGrad)">AI</tspan> Player
     </text>
-    <text x="0" y="47" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">
-      AI Music Discovery &amp; Player
+    <text x="0" y="44" class="logo-sub">
+      INTELLIGENT MUSIC PLAYER
     </text>
   </g>
 </svg>
